@@ -1,0 +1,19 @@
+# Use the internal Pouchen proxy for the Node image
+image: repo.pouchen.com/docker-proxy-group/library/node:22-alpine
+ 
+pages:
+  stage: deploy
+  tags:
+    - SGP-Prod-K8s
+
+  script:
+    - npm install
+    - npm run build
+    - rm -rf public
+    - cp -r dist public
+  artifacts:
+    paths:
+      - public
+  only:
+    - main
+
